@@ -1,0 +1,36 @@
+{
+  "changelogDate": "20221026030619",
+  "clientRootFolder": "bookCatalog",
+  "databaseType": "mongodb",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "title",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "author",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "bookId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "rentCnt",
+      "fieldType": "Integer"
+    }
+  ],
+  "microserviceName": "bookCatalog",
+  "name": "BookCatalog",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceImpl"
+}
