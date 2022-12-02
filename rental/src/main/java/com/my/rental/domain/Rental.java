@@ -89,6 +89,19 @@ public class Rental implements Serializable {
         return this;
     }
 
+    // Rental 엔티티 생성
+    public static Rental createRental(Long userId) {
+        Rental rental = new Rental();
+        rental.setUserId(userId); // Rental에 사용자 일련번호 부여
+        rental.setRentalStatus(RentalStatus.RENT_AVAILABLE); // 대출 가능하도록 상태 변경
+        rental.setLateFee(0L); // 연체료 초기화
+        return rental;
+    }
+
+    private void setLateFee(Long lateFree) {
+        this.lateFree = lateFree;
+    }
+
     public void setRentalStatus(RentalStatus rentalStatus) {
         this.rentalStatus = rentalStatus;
     }
