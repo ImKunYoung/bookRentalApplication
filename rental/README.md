@@ -213,6 +213,8 @@ public class Rental implements Serializable {
 - ``@ManyToOne``: N:1 관계를 나타냄. RentedItem : Rental = N : 1 관계임
 - ``Set<RentedItem> rentedItems = new HashSet<>()``: 1:N 관계에서 N에 해당하는 데이터를 담을 컬렉션을 선언함. 여기서는 List 대신 Set을 사용하는데, 이유는 같은 데이터가 중복해서 저장되는 것을 막기 위함임. List를 사용하면 같은 데이터가 중복해서 저장될 수 있음
 - ``@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)``: JPA에서 1차 캐시를 사용하도록 설정함. 1차 캐시란, JPA를 통해 DB에서 데이터를 가져오면, 해당 데이터를 캐시에 저장해두고, 다음번에 같은 데이터를 요청하면 캐시에서 가져오는 것을 말함. 이렇게 하면, DB에 접근하는 횟수를 줄일 수 있어서 성능이 향상됨. 여기서는 NONSTRICT_READ_WRITE 옵션을 사용함. 이 옵션은 엔티티를 수정할 때, 캐시와 DB를 동기화하는 옵션임. 이 옵션을 사용하면, 엔티티를 수정할 때, 캐시와 DB를 동기화하지 않고, 캐시를 우선적으로 수정함. 이 옵션을 사용하면, 성능이 향상되지만, 데이터의 정합성이 보장되지 않음. 만약, 데이터의 정합성이 중요하다면, READ_WRITE 옵션을 사용하면 됨. 이 옵션은 엔티티를 수정할 때, 캐시와 DB를 동기화함. 이 옵션을 사용하면, 성능이 떨어지지만, 데이터의 정합성이 보장됨. 이 옵션을 사용하면, 성능이 향상되지만, 데이터의 정합성이 보장되지 않음. 만약, 데이터의 정합성이 중요하다면, READ_WRITE 옵션을 사용하면 됨. 
+- ``cascade = CascadeType.ALL``: RentedItem 엔티티를 저장할 때, Rental 엔티티도 함께 저장하도록 설정함. 이 옵션을 사용하면, RentedItem 엔티티를 저장할 때, Rental 엔티티도 함께 저장하도록 설정할 수 있음. 
+- ``orphanRemoval = true``: 연관된 엔티티를 삭제할 때, orphanRemoval 옵션을 사용하면, 연관된 엔티티도 함께 삭제함
 
 
 
