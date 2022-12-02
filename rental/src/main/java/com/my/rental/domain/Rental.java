@@ -2,6 +2,8 @@ package com.my.rental.domain;
 
 import com.my.rental.domain.enumeration.RentalStatus;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -29,6 +31,26 @@ public class Rental implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "rental_status")
     private RentalStatus rentalStatus;
+
+    // 연체료
+    @Column(name = "late_free")
+    private Long lateFree;
+
+    // 대출 아이템
+    @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<RentedItem> rentedItems = new HashSet<>();
+
+    // 연체 아이템
+    @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<OverdueItem> overdueItems = new HashSet<>();
+
+    // 반납 아이템
+    @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<ReturnedItem> returnedItems = new HashSet<>();
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
