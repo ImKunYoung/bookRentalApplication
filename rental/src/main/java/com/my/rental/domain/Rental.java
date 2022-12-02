@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -101,6 +102,14 @@ public class Rental implements Serializable {
         return this;
     }
 
+
+
+    public Rental addRentedItem(RentedItem rentedItem) {
+        this.rentedItems.add(rentedItem);
+        rentedItem.setRental(this);
+        return this;
+    }
+
     // Rental 엔티티 생성, 대출 생성 매서드
     public static Rental createRental(Long userId) {
         Rental rental = new Rental();
@@ -110,17 +119,26 @@ public class Rental implements Serializable {
         return rental;
     }
 
+
+
     // 대출 가능 여부 체크
     public boolean isRentAvailable() {
-        if(this.rentalStatus.equals(RentalStatus.RENT_UNAVAILABE) || this.getLateFee()!=0L) {
-            throw new RentalUnavailableException("연체 상태입니다. 연체료를 정산 후, 도서를 대출하세요.");
-        }
 
-        if(this.getRentedItems().size()>=5) {
+        if(this.rentalStatus.equals(RentalStatus.RENT_UNAVAILABE) || this.getLateFee()!=0L)
+            throw new RentalUnavailableException("연체 상태입니다. 연체료를 정산 후, 도서를 대출하세요.");
+
+        if(this.getRentedItems().size()>=5)
             throw new RentalUnavailableException("대출 가능한 도서의 수는" + (5-this.getRentedItems().size()) + "권 입니다.");
-        }
 
         return true;
+    }
+
+
+
+    // 대출 처리 메서드
+    public Rental rentBook(Long bookid, String title) {
+        this.addRentedItem(RentedItem.createdRentedItem(bookid, title, LocalDate.now()));
+        return this;
     }
 
 

@@ -17,6 +17,7 @@ public class RentedItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    // 대출아이템 일련번호
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
@@ -26,14 +27,29 @@ public class RentedItem implements Serializable {
     @Column(name = "book_id")
     private Long bookId;
 
+    // 대출한 도서명
+    @Column(name = "book_title")
+    private String bookTitle;
+
+    // 대출 시작 일자
     @Column(name = "rented_date")
     private LocalDate rentedDate;
 
+    // 반납 예정 일자
     @Column(name = "due_date")
     private LocalDate dueDate;
 
     @ManyToOne
     private Rental rental;
+
+    // 대출 아이템을 생성하는 메서드
+    public static RentedItem createdRentedItem(Long bookid, String title, LocalDate now) {
+        RentedItem rentedItem = new RentedItem();
+        rentedItem.setBookId(bookid);
+        rentedItem.setBookTitle(title);
+        rentedItem.setRentedDate(now);
+        return rentedItem;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -62,6 +78,23 @@ public class RentedItem implements Serializable {
     public void setBookId(Long bookId) {
         this.bookId = bookId;
     }
+
+
+
+    public String getBookTitle() {
+        return this.bookTitle;
+    }
+
+    public RentedItem bookTitle(String bookTitle) {
+        this.setBookTitle(bookTitle);
+        return this;
+    }
+
+    public void setBookTitle(String bookTitle) {
+        this.bookTitle = bookTitle;
+    }
+
+
 
     public LocalDate getRentedDate() {
         return this.rentedDate;
