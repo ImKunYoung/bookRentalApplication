@@ -89,7 +89,7 @@ public class Rental implements Serializable {
         return this;
     }
 
-    // Rental 엔티티 생성
+    // Rental 엔티티 생성, 대출 생성 매서드
     public static Rental createRental(Long userId) {
         Rental rental = new Rental();
         rental.setUserId(userId); // Rental에 사용자 일련번호 부여
