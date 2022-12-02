@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+
+import com.my.rental.web.rest.errors.RentalUnavailableException;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -96,6 +98,14 @@ public class Rental implements Serializable {
         rental.setRentalStatus(RentalStatus.RENT_AVAILABLE); // 대출 가능하도록 상태 변경
         rental.setLateFee(0L); // 연체료 초기화
         return rental;
+    }
+
+    // 대출 가능 여부 체크
+    public boolean isRentAvailable() {
+        if(this.rentalStatus.equals(RentalStatus.RENT_UNAVAILABE) || this.getLateFee()!=0L) {
+            throw new RentalUnavailableException("연체 상태입니다. 연체료를 정산 후, 도서를 대출하세요.");
+        }
+        return this.rentalStatus == RentalStatus.RENT_AVAILABLE;
     }
 
     private void setLateFee(Long lateFree) {
