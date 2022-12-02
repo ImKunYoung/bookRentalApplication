@@ -1,14 +1,17 @@
 package com.my.rental.domain;
 
 import com.my.rental.domain.enumeration.RentalStatus;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.*;
-
 import com.my.rental.web.rest.errors.RentalUnavailableException;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Rental.
@@ -16,6 +19,10 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @Table(name = "rental")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Rental implements Serializable {
 
@@ -36,21 +43,24 @@ public class Rental implements Serializable {
 
     // 연체료
     @Column(name = "late_free")
-    private Long lateFree;
+    private Long lateFee;
 
     // 대출 아이템
     @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @ToString.Exclude
     private Set<RentedItem> rentedItems = new HashSet<>();
 
     // 연체 아이템
     @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @ToString.Exclude
     private Set<OverdueItem> overdueItems = new HashSet<>();
 
     // 반납 아이템
     @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @ToString.Exclude
     private Set<ReturnedItem> returnedItems = new HashSet<>();
 
 
@@ -105,35 +115,20 @@ public class Rental implements Serializable {
         if(this.rentalStatus.equals(RentalStatus.RENT_UNAVAILABE) || this.getLateFee()!=0L) {
             throw new RentalUnavailableException("연체 상태입니다. 연체료를 정산 후, 도서를 대출하세요.");
         }
-        return this.rentalStatus == RentalStatus.RENT_AVAILABLE;
+
+        if(this.getRentedItems().size()>=5) {
+            throw new RentalUnavailableException("대출 가능한 도서의 수는" + (5-this.getRentedItems().size()) + "권 입니다.");
+        }
+
+        return true;
     }
 
-    private void setLateFee(Long lateFree) {
-        this.lateFree = lateFree;
-    }
 
     public void setRentalStatus(RentalStatus rentalStatus) {
         this.rentalStatus = rentalStatus;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Rental)) {
-            return false;
-        }
-        return id != null && id.equals(((Rental) o).id);
-    }
-
-    @Override
-    public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
-    }
 
     // prettier-ignore
     @Override
@@ -143,5 +138,18 @@ public class Rental implements Serializable {
             ", userId=" + getUserId() +
             ", rentalStatus='" + getRentalStatus() + "'" +
             "}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Rental rental = (Rental) o;
+        return id != null && Objects.equals(id, rental.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
