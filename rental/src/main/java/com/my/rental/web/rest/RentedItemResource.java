@@ -66,7 +66,7 @@ public class RentedItemResource {
             .body(result);
     }
 
-    /**
+    /*
      * {@code PUT  /rented-items/:id} : Updates an existing rentedItem.
      *
      * @param id the id of the rentedItemDTO to save.
