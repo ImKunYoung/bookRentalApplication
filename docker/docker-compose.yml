@@ -1,0 +1,21 @@
+version: '1'
+
+
+services:
+  microservice1:
+    image: microservice1
+    container_name: microservice1
+    #    ports:
+    #      - 8081:8081
+    environment:
+    networks:
+      - bookRentalApplication-network
+
+
+
+
+
+
+networks:
+  bookRentalApplication-network:
+    driver: bridge
