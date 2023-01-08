@@ -122,13 +122,15 @@ public class Rental implements Serializable {
 
 
     // 대출 가능 여부 체크
-    public boolean isRentAvailable() {
+    public boolean checkRentalAvailable() throws Exception {
 
-        if(this.rentalStatus.equals(RentalStatus.RENT_UNAVAILABE) || this.getLateFee()!=0L)
+        if (this.rentalStatus.equals(RentalStatus.RENT_UNAVAILABE) || this.getLateFee()!=0L) {
             throw new RentalUnavailableException("연체 상태입니다. 연체료를 정산 후, 도서를 대출하세요.");
+        }
 
-        if(this.getRentedItems().size()>=5)
+        if (this.getRentedItems().size()>=5) {
             throw new RentalUnavailableException("대출 가능한 도서의 수는" + (5-this.getRentedItems().size()) + "권 입니다.");
+        }
 
         return true;
     }
