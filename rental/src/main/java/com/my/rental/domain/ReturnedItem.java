@@ -26,16 +26,20 @@ public class ReturnedItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    // 반납아이템 일련 번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 반납한 재고 도서 일랸번호 (도서 서비스에서 발행한 재고 도서 일련 번호)
     @Column(name = "book_id")
     private Long bookId;
 
+    // 반납 일자
     @Column(name = "returned_date")
     private LocalDate returnedDate;
 
+    // 반납 도서명
     @Column(name = "book_title")
     private String bookTitle;
 
@@ -43,6 +47,7 @@ public class ReturnedItem implements Serializable {
     @JsonIgnoreProperties("returnedItems")
     private Rental rental;
 
+    // 반납 아이템 생성 메서드
     public static ReturnedItem createReturnedItem(Long bookId, String bookTitle, LocalDate now) {
         ReturnedItem returnedItem = new ReturnedItem();
         returnedItem.setBookId(bookId);
