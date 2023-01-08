@@ -3,6 +3,8 @@ package com.my.rental.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -39,6 +41,7 @@ public class RentedItem implements Serializable {
     private LocalDate dueDate;
 
     @ManyToOne
+    @JsonIgnoreProperties("rentedItems")
     private Rental rental;
 
     // 대출 아이템을 생성하는 메서드
