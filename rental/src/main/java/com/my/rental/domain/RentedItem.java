@@ -3,6 +3,8 @@ package com.my.rental.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -11,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  */
 @Entity
 @Table(name = "rented_item")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class RentedItem implements Serializable {
 
@@ -19,8 +21,7 @@ public class RentedItem implements Serializable {
 
     // 대출아이템 일련번호
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -40,6 +41,7 @@ public class RentedItem implements Serializable {
     private LocalDate dueDate;
 
     @ManyToOne
+    @JsonIgnoreProperties("rentedItems")
     private Rental rental;
 
     // 대출 아이템을 생성하는 메서드
