@@ -144,6 +144,31 @@ public class Rental implements Serializable {
     }
 
 
+    // 반납 처리 메서드
+    public Rental returnBook(Long bookId) {
+
+        RentedItem rentedItem = this.rentedItems.stream().filter(item -> item.getBookId().equals(bookId)).findFirst().get();
+
+        this.addReturnedItem(ReturnedItem.createReturnedItem(rentedItem.getBookId(), rentedItem.getBookTitle(), LocalDate.now()));
+
+        this.removeRentedItem(rentedItem);
+
+        return this;
+    }
+
+    /*TODO: - Check here*/
+    private void removeRentedItem(RentedItem rentedItem) {
+        this.rentedItems.remove(rentedItem);
+        rentedItem.setRental(null);
+    }
+
+    /*TODO: - Check here*/
+    private void addReturnedItem(ReturnedItem returnedItem) {
+        this.returnedItems.add(returnedItem);
+        returnedItem.setRental(this);
+    }
+
+
     public void setRentalStatus(RentalStatus rentalStatus) {
         this.rentalStatus = rentalStatus;
     }
