@@ -2,14 +2,15 @@ package com.my.rental.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Data;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * A ReturnedItem.
@@ -17,7 +18,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "returned_item")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @ToString
 public class ReturnedItem implements Serializable {
 
@@ -75,17 +78,14 @@ public class ReturnedItem implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof ReturnedItem)) {
-            return false;
-        }
-        return id != null && id.equals(((ReturnedItem) o).id);
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ReturnedItem that = (ReturnedItem) o;
+        return id != null && Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return 31;
+        return getClass().hashCode();
     }
 }
