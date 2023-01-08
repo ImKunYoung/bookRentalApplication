@@ -45,11 +45,12 @@ public class RentedItem implements Serializable {
     private Rental rental;
 
     // 대출 아이템을 생성하는 메서드
-    public static RentedItem createdRentedItem(Long bookid, String title, LocalDate now) {
+    public static RentedItem createdRentedItem(Long bookid, String title, LocalDate rentedDate) {
         RentedItem rentedItem = new RentedItem();
         rentedItem.setBookId(bookid);
         rentedItem.setBookTitle(title);
-        rentedItem.setRentedDate(now);
+        rentedItem.setRentedDate(rentedDate);
+        rentedItem.setDueDate(rentedDate.plusWeeks(2));
         return rentedItem;
     }
 
