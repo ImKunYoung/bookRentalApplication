@@ -43,9 +43,9 @@ public class ReturnedItem implements Serializable {
     @Column(name = "book_title")
     private String bookTitle;
 
-    @ManyToOne
-    @JsonIgnoreProperties("returnedItems")
-    private Rental rental;
+//    @ManyToOne
+//    @JsonIgnoreProperties("returnedItems")
+//    private Rental rental;
 
     // 반납 아이템 생성 메서드
     public static ReturnedItem createReturnedItem(Long bookId, String bookTitle, LocalDate now) {
@@ -74,10 +74,10 @@ public class ReturnedItem implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
 
-    public ReturnedItem rental(Rental rental) {
-        this.rental = rental;
-        return this;
-    }
+//    public ReturnedItem rental(Rental rental) {
+//        this.rental = rental;
+//        return this;
+//    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
