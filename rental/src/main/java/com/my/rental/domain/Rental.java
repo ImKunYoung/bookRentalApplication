@@ -165,7 +165,7 @@ public class Rental implements Serializable {
     /*TODO: - Check here*/
     private void addReturnedItem(ReturnedItem returnedItem) {
         this.returnedItems.add(returnedItem);
-        returnedItem.setRental(this);
+//        returnedItem.setRental(this);
     }
 
 
