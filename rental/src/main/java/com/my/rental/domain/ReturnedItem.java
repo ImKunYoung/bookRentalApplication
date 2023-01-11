@@ -93,4 +93,5 @@ public class ReturnedItem implements Serializable {
     public int hashCode() {
         return getClass().hashCode();
     }
+
 }
