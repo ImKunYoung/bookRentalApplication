@@ -1,8 +1,11 @@
-
+[![BookCatalogService Docker Image CI](https://github.com/ImKunYoung/bookRentalApplication/actions/workflows/docker-image-bookCatalog.yml/badge.svg)](https://github.com/ImKunYoung/bookRentalApplication/actions/workflows/docker-image-bookCatalog.yml)
+[![BookService Docker Image CI](https://github.com/ImKunYoung/bookRentalApplication/actions/workflows/docker-image-book.yml/badge.svg)](https://github.com/ImKunYoung/bookRentalApplication/actions/workflows/docker-image-book.yml)
+[![Gateway Docker Image CI](https://github.com/ImKunYoung/bookRentalApplication/actions/workflows/docker-image-gateway.yml/badge.svg)](https://github.com/ImKunYoung/bookRentalApplication/actions/workflows/docker-image-gateway.yml)
+[![RentalService Docker Image CI](https://github.com/ImKunYoung/bookRentalApplication/actions/workflows/docker-image-rental.yml/badge.svg)](https://github.com/ImKunYoung/bookRentalApplication/actions/workflows/docker-image-rental.yml)
 
 ## Branch Rules
 
-마이크로서비스별로 이름 하나 파서 작업
+microservice name
 
 <br/>
 
