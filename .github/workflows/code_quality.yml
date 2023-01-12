@@ -3,6 +3,7 @@ uses: JetBrains/qodana-action@main
 env:
   QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
 on:
+  workflow_dispatch:
   push:
     branches:
       - '*'
