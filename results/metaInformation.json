@@ -1,0 +1,18 @@
+{
+  "total": 0,
+  "tools inspection": {
+    "Code Inspection": 0
+  },
+  "attributes": {
+    "vcs": {
+      "sarifIdea": {
+        "repositoryUri": "https://github.com/ImKunYoung/bookRentalApplication",
+        "revisionId": "c39ec9897613802d3d3a29f2536da2bbbed57799",
+        "branch": "ci/add-lint"
+      }
+    },
+    "deviceId": "200820300000000-ed54-83ae-1388-d5239451f734",
+    "jobUrl": "https://github.com/ImKunYoung/bookRentalApplication/actions/runs/3905797494",
+    "repoUrl": "https://github.com/ImKunYoung/bookRentalApplication"
+  }
+}
