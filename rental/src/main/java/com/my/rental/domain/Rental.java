@@ -122,7 +122,7 @@ public class Rental implements Serializable {
 
 
     // 대출 가능 여부 체크
-    public boolean checkRentalAvailable() throws Exception {
+    public boolean checkRentalAvailable()  {
 
         if (this.rentalStatus.equals(RentalStatus.RENT_UNAVAILABE) || this.getLateFee()!=0L) {
             throw new RentalUnavailableException("연체 상태입니다. 연체료를 정산 후, 도서를 대출하세요.");
