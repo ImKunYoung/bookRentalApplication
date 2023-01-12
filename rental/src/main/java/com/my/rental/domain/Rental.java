@@ -59,6 +59,7 @@ public class Rental implements Serializable {
     private Set<OverdueItem> overdueItems = new HashSet<>();
 
     // 반납 아이템
+    /*TODO: -CHECK OUT*/
     @OneToMany(mappedBy = "rental", cascade = CascadeType.ALL, orphanRemoval = true)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @ToString.Exclude
