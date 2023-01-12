@@ -81,4 +81,26 @@ public class RentalServiceImpl implements RentalService {
         log.debug("Request to delete Rental : {}", id);
         rentalRepository.deleteById(id);
     }
+
+    /*도서 대출 처리 구현*/
+    @Override
+    public Rental rentBook(Long userId, Long bookId, String bookTitle) {
+        Rental rental = rentalRepository.findByUserId(userId).get(); // Rental 조회
+        rental.checkRentalAvailable(); // 대출 가능 상태 확인
+        rental = rental.rentBook(bookId, bookTitle); // Rental에 대출 처리 위임
+        rentalRepository.save(rental); // Rental 저장
+
+        // 도서 서비스에 도서재고 감소를 위해 도서대출 이벤트 발송
+        rentalProducer.updateBookStatus(bookId, "UNAVAILABLE");
+
+        // 도서 카탈로그 서비스에 대출된 도서로 상태를 변경하기 위한 이벤트 발송
+        rentalProducer.updateBookCatalog(bookId, "RENT_BOOK");
+
+        // 대출로 인한 사용자 포인트 적립을 위해 사용자 서비스에 이벤트 발송
+        rentalProducer.savePoints(userId);
+
+        /*TODO: -Check out*/
+
+        return rental;
+    }
 }
