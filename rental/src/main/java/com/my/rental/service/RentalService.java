@@ -1,5 +1,6 @@
 package com.my.rental.service;
 
+import com.my.rental.domain.Rental;
 import com.my.rental.service.dto.RentalDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -55,4 +56,7 @@ public interface RentalService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    /*도서 대출*/
+    Rental rentBook(Long userId, Long bookId, String bookTitle);
 }
